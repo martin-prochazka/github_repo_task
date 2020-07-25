@@ -1,11 +1,11 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import App from './App'
+import { App } from './App'
 
 describe('App', () => {
-	it('should render task', () => {
+	it('should render Repositories', () => {
 		const { getByText } = render(<App />)
-		const linkElement = getByText(/task/i)
-		expect(linkElement).toBeInTheDocument()
+		const repositoriesElement = getByText(/repositories/i)
+		expect(repositoriesElement).toBeInTheDocument()
 	})
 })
