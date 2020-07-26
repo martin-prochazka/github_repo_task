@@ -1,5 +1,11 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import {
+	createAsyncThunk,
+	createEntityAdapter,
+	createSlice,
+	PayloadAction,
+} from '@reduxjs/toolkit'
 import axios from 'axios'
+import { convertToRepositories } from 'repositories/utils'
 
 export interface Repository {
 	id: number
@@ -9,14 +15,21 @@ export interface Repository {
 	stars: number
 }
 
+const repositoryAdapter = createEntityAdapter<Repository>()
+const initialRepositoryState = repositoryAdapter.getInitialState()
+
 export interface RepositoryState {
-	repositories: Repository[]
+	repositories: typeof initialRepositoryState
 	starred: { [key: number]: boolean }
+	isLoading: boolean
+	errors: string[]
 }
 
 const initialState: RepositoryState = {
-	repositories: [],
+	repositories: initialRepositoryState,
 	starred: {},
+	isLoading: false,
+	errors: [],
 }
 
 export const fetchRepositories = createAsyncThunk(
@@ -25,7 +38,8 @@ export const fetchRepositories = createAsyncThunk(
 		const response = await axios.get(
 			'https://api.github.com/search/repositories?q=created:%3E2020-07-01&sort=stars&order=desc'
 		)
-		console.log(response)
+
+		return response?.data
 	}
 )
 
@@ -33,17 +47,29 @@ export const repositorySlice = createSlice({
 	name: 'repositories',
 	initialState,
 	reducers: {
-		addStar: (
-			state: RepositoryState,
-			{ payload }: PayloadAction<number>
-		) => {
+		addStar: (state, { payload }: PayloadAction<number>) => {
 			state.starred[payload] = true
 		},
-		removeStar: (
-			state: RepositoryState,
-			{ payload }: PayloadAction<number>
-		) => {
+		removeStar: (state, { payload }: PayloadAction<number>) => {
 			state.starred[payload] = false
 		},
+	},
+	extraReducers: builder => {
+		builder.addCase(fetchRepositories.pending, state => {
+			state.isLoading = true
+		})
+		builder.addCase(fetchRepositories.fulfilled, (state, { payload }) => {
+			state.isLoading = false
+			state.errors = []
+
+			const repositories = convertToRepositories(payload.items)
+			repositoryAdapter.setAll(state.repositories, repositories)
+		})
+		builder.addCase(fetchRepositories.rejected, (state, { error }) => {
+			const { message } = error
+
+			state.isLoading = false
+			state.errors = message ? [message] : ['Unknown error']
+		})
 	},
 })
