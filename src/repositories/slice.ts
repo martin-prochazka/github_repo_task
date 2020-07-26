@@ -5,9 +5,9 @@ import {
 	PayloadAction,
 } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { convertToRepositories } from 'repositories/utils'
+import { convertToRepositories, getLastWeekDate } from 'repositories/utils'
 
-export interface Repository {
+export interface RepositoryModel {
 	id: number
 	name: string
 	link: string
@@ -15,7 +15,7 @@ export interface Repository {
 	stars: number
 }
 
-export const repositoryAdapter = createEntityAdapter<Repository>()
+export const repositoryAdapter = createEntityAdapter<RepositoryModel>()
 const initialRepositoryState = repositoryAdapter.getInitialState()
 
 export interface RepositoryFilter {
@@ -43,8 +43,9 @@ const initialState: RepositoryState = {
 export const fetchRepositories = createAsyncThunk(
 	'repositories/fetchRepositories',
 	async () => {
+		const date = getLastWeekDate()
 		const response = await axios.get(
-			'https://api.github.com/search/repositories?q=created:%3E2020-07-01&sort=stars&order=desc'
+			`https://api.github.com/search/repositories?q=created:%3E${date}&sort=stars&order=desc`
 		)
 
 		return response?.data
