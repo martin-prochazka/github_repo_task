@@ -15,21 +15,29 @@ export interface Repository {
 	stars: number
 }
 
-const repositoryAdapter = createEntityAdapter<Repository>()
+export const repositoryAdapter = createEntityAdapter<Repository>()
 const initialRepositoryState = repositoryAdapter.getInitialState()
+
+export interface RepositoryFilter {
+	isStarred: boolean
+}
 
 export interface RepositoryState {
 	repositories: typeof initialRepositoryState
-	starred: { [key: number]: boolean }
+	starred: number[]
 	isLoading: boolean
 	errors: string[]
+	filter: RepositoryFilter
 }
 
 const initialState: RepositoryState = {
 	repositories: initialRepositoryState,
-	starred: {},
+	starred: [],
 	isLoading: false,
 	errors: [],
+	filter: {
+		isStarred: false,
+	},
 }
 
 export const fetchRepositories = createAsyncThunk(
@@ -48,10 +56,13 @@ export const repositorySlice = createSlice({
 	initialState,
 	reducers: {
 		addStar: (state, { payload }: PayloadAction<number>) => {
-			state.starred[payload] = true
+			state.starred.push(payload)
 		},
 		removeStar: (state, { payload }: PayloadAction<number>) => {
-			state.starred[payload] = false
+			state.starred = state.starred.filter(id => id !== payload)
+		},
+		setFilter: (state, { payload }: PayloadAction<RepositoryFilter>) => {
+			state.filter = payload
 		},
 	},
 	extraReducers: builder => {
