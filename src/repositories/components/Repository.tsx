@@ -7,6 +7,7 @@ import {
 	Switch,
 	Typography,
 } from '@material-ui/core'
+import StarIcon from '@material-ui/icons/Star'
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectIsRepoStarred } from 'repositories/selectors'
@@ -42,21 +43,25 @@ export const Repository: React.FC<RepositoryProps> = ({ repository }) => {
 			<Card>
 				<CardContent>
 					<Typography variant='h6'>{repository.name}</Typography>
-					<Typography variant='body1'>
-						{repository.description}
-					</Typography>
+					<Box display='flex' alignItems='center'>
+						<Box marginRight={1}>
+							<StarIcon />
+						</Box>
+						<Typography>{repository.stars}</Typography>
+					</Box>
+					<Typography>{repository.description}</Typography>
 					<Link href={repository.link} target='_blank'>
 						{repository.link}
 					</Link>
-					<Typography variant='body2'>
-						Stars: {repository.stars}
-					</Typography>
 				</CardContent>
 				<CardActions>
 					<Switch
 						checked={isStarred}
 						onChange={e => handleStarred(e.target.checked)}
 					/>
+					<Typography variant='caption'>
+						{isStarred ? 'Unstar this repo' : 'Star this repo'}
+					</Typography>
 				</CardActions>
 			</Card>
 		</Box>
