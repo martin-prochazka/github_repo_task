@@ -4,7 +4,7 @@ import {
 	createSlice,
 	PayloadAction,
 } from '@reduxjs/toolkit'
-import { convertToRepositories, getLastWeekDate } from 'repositories/utils'
+import { convertToRepositories } from 'repositories/utils'
 import { getGitHubLastWeekRepositories } from 'repositories/api'
 
 export interface RepositoryModel {
@@ -42,11 +42,7 @@ export const initialState: RepositoryState = {
 
 export const fetchRepositories = createAsyncThunk(
 	'repositories/fetchRepositories',
-	async () => {
-		const response = await getGitHubLastWeekRepositories()
-
-		return response?.data
-	}
+	async () => await getGitHubLastWeekRepositories()
 )
 
 export const repositorySlice = createSlice({

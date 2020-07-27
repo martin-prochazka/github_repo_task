@@ -39,18 +39,28 @@ export const Repository: React.FC<RepositoryProps> = ({ repository }) => {
 	)
 
 	return (
-		<Box margin={1} data-test-id='repository-box'>
+		<Box margin={1} data-testid='repository-box'>
 			<Card>
 				<CardContent>
-					<Typography variant='h6'>{repository.name}</Typography>
+					<Typography variant='h6' data-testid='repository-name'>
+						{repository.name}
+					</Typography>
 					<Box display='flex' alignItems='center'>
 						<Box marginRight={1}>
 							<StarIcon />
 						</Box>
-						<Typography>{repository.stars}</Typography>
+						<Typography data-testid='repository-stars'>
+							{repository.stars}
+						</Typography>
 					</Box>
-					<Typography>{repository.description}</Typography>
-					<Link href={repository.link} target='_blank'>
+					<Typography data-testid='repository-description'>
+						{repository.description}
+					</Typography>
+					<Link
+						href={repository.link}
+						target='_blank'
+						data-testid='repository-link'
+					>
 						{repository.link}
 					</Link>
 				</CardContent>
@@ -58,9 +68,12 @@ export const Repository: React.FC<RepositoryProps> = ({ repository }) => {
 					<Switch
 						checked={isStarred}
 						onChange={e => handleStarred(e.target.checked)}
-						data-test-id='star-switch'
+						data-testid='star-switch'
 					/>
-					<Typography variant='caption'>
+					<Typography
+						variant='caption'
+						data-testid='repository-starred-label'
+					>
 						{isStarred ? 'Unstar this repo' : 'Star this repo'}
 					</Typography>
 				</CardActions>

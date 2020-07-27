@@ -1,4 +1,4 @@
-import { getGitHubRepositoriesMock } from '../fixtures/repository'
+import { getGitHubRepositoriesMock } from '../fixtures/repositoryMocks'
 
 describe('repositories', () => {
 	const repositoryMock = getGitHubRepositoriesMock()
@@ -13,15 +13,15 @@ describe('repositories', () => {
 	})
 
 	it('should show only starred repos', () => {
-		cy.get('[data-test-id=repository-box]').should(
+		cy.get('[data-testid=repository-box]').should(
 			'have.length',
 			repositoryMock.items.length
 		)
 
-		cy.get('[data-test-id=star-switch]').last().click()
+		cy.get('[data-testid=star-switch]').last().click()
 
-		cy.get('[data-test-id=filter-stared-switch]').click()
+		cy.get('[data-testid=filter-stared-switch]').click()
 
-		cy.get('[data-test-id=repository-box]').should('have.length', 1)
+		cy.get('[data-testid=repository-box]').should('have.length', 1)
 	})
 })
