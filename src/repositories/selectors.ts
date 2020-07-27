@@ -2,21 +2,24 @@ import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from 'store'
 import { RepositoryModel } from 'repositories/slice'
 
-const selectRepoSlice = createSelector(
+export const selectRepoSlice = createSelector(
 	(state: RootState) => state.repos,
 	repos => repos
 )
 
 export const selectFilter = createSelector(selectRepoSlice, repo => repo.filter)
 
-const selectStarredIds = createSelector(selectRepoSlice, repo => repo.starred)
+export const selectStarredIds = createSelector(
+	selectRepoSlice,
+	repo => repo.starred
+)
 
 export const selectIsLoading = createSelector(
 	selectRepoSlice,
 	repo => repo.isLoading
 )
 
-const selectRepositories = createSelector(
+export const selectRepositories = createSelector(
 	selectRepoSlice,
 	selectIsLoading,
 	(repo, isLoading) => (isLoading ? [] : repo.repositories.entities)
