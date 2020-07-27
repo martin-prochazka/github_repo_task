@@ -45,9 +45,9 @@ export const Repository: React.FC<RepositoryProps> = ({ repository }) => {
 					<Typography variant='h6' data-testid='repository-name'>
 						{repository.name}
 					</Typography>
-					<Box display='flex' alignItems='center'>
+					<Box display='flex' alignItems='end'>
 						<Box marginRight={1}>
-							<StarIcon />
+							<StarIcon fontSize='small' />
 						</Box>
 						<Typography data-testid='repository-stars'>
 							{repository.stars}
