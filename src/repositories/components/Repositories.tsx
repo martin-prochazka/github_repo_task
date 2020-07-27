@@ -51,6 +51,7 @@ export const Repositories: React.FC = () => {
 						<Switch
 							checked={filter.isStarred}
 							onChange={e => handleSetFilter(e.target.checked)}
+							data-test-id='filter-stared-switch'
 						/>
 					}
 					label={

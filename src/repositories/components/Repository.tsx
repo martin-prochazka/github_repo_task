@@ -39,7 +39,7 @@ export const Repository: React.FC<RepositoryProps> = ({ repository }) => {
 	)
 
 	return (
-		<Box margin={1}>
+		<Box margin={1} data-test-id='repository-box'>
 			<Card>
 				<CardContent>
 					<Typography variant='h6'>{repository.name}</Typography>
@@ -58,6 +58,7 @@ export const Repository: React.FC<RepositoryProps> = ({ repository }) => {
 					<Switch
 						checked={isStarred}
 						onChange={e => handleStarred(e.target.checked)}
+						data-test-id='star-switch'
 					/>
 					<Typography variant='caption'>
 						{isStarred ? 'Unstar this repo' : 'Star this repo'}
