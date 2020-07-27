@@ -4,8 +4,8 @@ import {
 	createSlice,
 	PayloadAction,
 } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { convertToRepositories, getLastWeekDate } from 'repositories/utils'
+import { getGitHubLastWeekRepositories } from 'repositories/api'
 
 export interface RepositoryModel {
 	id: number
@@ -30,7 +30,7 @@ export interface RepositoryState {
 	filter: RepositoryFilter
 }
 
-const initialState: RepositoryState = {
+export const initialState: RepositoryState = {
 	repositories: initialRepositoryState,
 	starred: [],
 	isLoading: false,
@@ -43,10 +43,7 @@ const initialState: RepositoryState = {
 export const fetchRepositories = createAsyncThunk(
 	'repositories/fetchRepositories',
 	async () => {
-		const date = getLastWeekDate()
-		const response = await axios.get(
-			`https://api.github.com/search/repositories?q=created:%3E${date}&sort=stars&order=desc`
-		)
+		const response = await getGitHubLastWeekRepositories()
 
 		return response?.data
 	}
@@ -56,6 +53,7 @@ export const repositorySlice = createSlice({
 	name: 'repositories',
 	initialState,
 	reducers: {
+		clear: () => initialState,
 		addStar: (state, { payload }: PayloadAction<number>) => {
 			state.starred.push(payload)
 		},
