@@ -1,5 +1,5 @@
-import { mockedGitHubRepositories } from '../../src/test-utils/mocks/repositoryMocks'
+import {mockedGitHubRepositories} from '../../src/repositories/components/__mocks__/repositoryMocks'
 
 export const getGitHubRepositoriesMock = () => ({
-	items: mockedGitHubRepositories,
+    items: mockedGitHubRepositories,
 })
