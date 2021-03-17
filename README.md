@@ -2,19 +2,19 @@
 
 In the project directory, you can run:
 
-### `yarn install`
+### `npm install`
 
 First of all, install dependencies
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `yarn test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
 
-### `yarn cypress`
+### `npm run cypress`
 
 Launches Cypress test runner
