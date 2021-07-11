@@ -1,6 +1,7 @@
 import {Box, CircularProgress, Container, FormControlLabel, Switch, Typography} from '@material-ui/core'
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {REPOS_COUNT} from 'repositories/api'
 import {Repository} from 'repositories/components/Repository'
 import {selectFilter, selectFilteredRepositories, selectIsLoading} from 'repositories/selectors'
 import {fetchRepositories, repositorySlice} from 'repositories/slice'
@@ -28,7 +29,7 @@ export const Repositories: React.FC = () => {
             <Container maxWidth='md'>
                 <Box margin={4}>
                     <Typography variant='h4' align='center'>
-                        Trending repositories
+                        {REPOS_COUNT} newest repositories
                     </Typography>
                 </Box>
 
