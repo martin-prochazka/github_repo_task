@@ -1,20 +1,30 @@
-## Available Scripts
+# What's this about
 
-In the project directory, you can run:
+This is exploration project that tries using Redux-Toolkit and testing (Jest, Testing Library and Cypress).
 
-### `npm install`
+Public repositories created in last week (but only 50 newest) will be listed. No pagination is implemented. 
 
-First of all, install dependencies
+You can star some repo and filter only them. 
 
-### `npm start`
+There is no routing and styling is mininal with Material UI.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to run
 
-### `npm test`
+```
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.<br />
+## How to run unit tests
 
-### `npm run cypress`
+```
+npm test
+```
 
-Launches Cypress test runner
+## How to run Cypress
+
+It is just one simple test
+
+```
+npm run cypress
+```
